@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import ClubProfile from '../ClubProfile/ClubProfile'
 
-const Settings= ({ navigation }) => {
+const Settings= ({ navigation }:any) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.cotainer}>
@@ -29,19 +30,32 @@ const Settings= ({ navigation }) => {
   )
 }
 
-const ClubsPage= () => {
+const ClubsPage= ({ navigation }:any) => {
+  const Stack = createNativeStackNavigator();
+  const main = "main";
+  const profile = "clubprofile";
+  
   return (
-    <View style={styles2.wrapper}>
-      <View style={styles2.container}>
-        <View style={styles2.card}>
-            <Image style={styles2.profileImg} source={{uri: 'https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg'}} width={80} height={80} />
-            <View>
-              <Text style={styles2.headtext}>Open Dance Society Faridabad</Text>
-              <Text style={[styles2.text, styles2.badge]}>dsfd</Text>
+    <Stack.Navigator initialRouteName={main} screenOptions={{headerShown: false}}>
+      <Stack.Screen name={main} component={() => {
+        return (
+        <View style={styles2.wrapper}>
+          <View style={styles2.container}>
+            <Pressable onPress={() => navigation.navigate('clubprofile')} >
+            <View style={styles2.card}>
+                <Image style={styles2.profileImg} source={{uri: 'https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg'}} width={80} height={80} />
+                <View>
+                  <Text style={styles2.headtext}>Open Dance Society Faridabad</Text>
+                  <Text style={[styles2.text, styles2.badge]}>dsfd</Text>
+                </View>
             </View>
+            </Pressable>
+          </View>
         </View>
-      </View>
-    </View>
+        )
+      }} />
+      <Stack.Screen name={profile} component={ClubProfile} />
+    </Stack.Navigator>
   )
 }
 
