@@ -21,6 +21,7 @@ import Home from './src/screens/Home/Home';
 import Profile from './src/screens/Profile/Profile';
 import Notifications from './src/screens/Notifications/Notifications';
 import LoginScr from './src/screens/Login/Login';
+import Boarding from './src/screens/Login/Boarding';
 
 const Tab = createBottomTabNavigator();
 
