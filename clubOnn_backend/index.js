@@ -24,6 +24,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users= require('./modals/Users')(sequelize, DataTypes);
+db.clubs= require('./modals/Clubs')(sequelize, DataTypes);
 
 app.use(express.json());
 
