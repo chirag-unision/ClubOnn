@@ -15,7 +15,7 @@ export function MainScreen({ navigation }:any) {
   
     return (
       <View style={styles.wrapper}>
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View style={styles.locationInput}>
             <Text style={styles.text}>You haven't joined any club yet</Text>
           </View>
@@ -40,7 +40,7 @@ export function MainScreen({ navigation }:any) {
               })}
             </ScrollView>
           </View>
-        </View>
+        </ScrollView>
       </View>
     )
 }
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       maxHeight: 60,
       borderRadius: 5,
-      zIndex: 10
+      zIndex: 10,
+      paddingVertical: 20
     },
     selectBtnContainer: {
       flex: 1,
@@ -101,6 +102,7 @@ const styles = StyleSheet.create({
       color: '#fff'
     },
     section: {
-      paddingVertical: 10
+      paddingVertical: 10,
+      marginVertical: 20
     }
 })

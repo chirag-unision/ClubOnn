@@ -9,6 +9,7 @@ export default function Login() {
   const [mobile, setMobile]= useState('');
 
   const handleLogin= ()=> {
+    if(mobile.match('/^[6-8][0-9]{9}$/')) {
     axios.post('http://localhost:3100/login', {
       mobile: mobile
     })
@@ -18,6 +19,7 @@ export default function Login() {
     .catch(function (error) {
       console.log(error);
     });
+  }
   }
 
   return (
