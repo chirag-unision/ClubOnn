@@ -1,9 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import ClubProfile from '../ClubProfile/ClubProfile'
 
-const Settings= ({ navigation }:any) => {
+const Settings= (props:any, { navigation }:any) => {
+
+  const handleLogout= async ()=> {
+    try {
+      await AsyncStorage.removeItem('key')
+      props.changeLoginState(false)
+    } catch(e) {
+      // remove error
+    }
+    console.log('Done.')
+  }
+
   return (
     <View style={styles.wrapper}>
       <View style={styles.cotainer}>
@@ -23,7 +35,9 @@ const Settings= ({ navigation }:any) => {
           <Pressable onPress={() => navigation.navigate('FollowingPage')} >
             <Text style={[styles.text, styles.button]}>Following</Text>
           </Pressable>
-          <Text style={[styles.text, styles.button]}>Logout</Text>
+          <Pressable onPress={handleLogout}>
+            <Text style={[styles.text, styles.button]}>Logout</Text>
+          </Pressable>
         </View>
       </View>
     </View>
@@ -75,7 +89,7 @@ const FollowingPage= () => {
   )
 }
 
-export default function Notifications() {
+export default function Profile(props) {
   const Stack = createNativeStackNavigator();
   const main = "Settings";
   const clubpg = "ClubsPage";
@@ -83,7 +97,7 @@ export default function Notifications() {
   
   return (
     <Stack.Navigator initialRouteName={main} screenOptions={{headerShown: false}}>
-      <Stack.Screen name={main} component={Settings} />
+      <Stack.Screen name={main} component={()=> <Settings changeLoginState={props.setIsLogin} />} />
       <Stack.Screen name={clubpg} component={ClubsPage} />
       <Stack.Screen name={followpg} component={FollowingPage} />
     </Stack.Navigator>

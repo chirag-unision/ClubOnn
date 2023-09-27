@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
@@ -39,14 +39,16 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const [isLogin, setIsLogin]= useState(async() => {
-    const value= await AsyncStorage.getItem('key')
+  const [isLogin, setIsLogin]= useState(false);
+
+  useEffect( async() => {
+    let value= await AsyncStorage.getItem('key');
+    console.log(value)
     if(value) {
-      return true;
-    } else {
-      return false;
+      setIsLogin(true)
     }
-  });
+  }, [])
+  
 
   const validationCheck= ()=> {
     setIsLogin(true);
@@ -132,7 +134,7 @@ function App(): JSX.Element {
             },
           }}
           name={'Profile'}
-          component={Profile}
+          component={() => <Profile setIsLogin={setIsLogin} />}
         />
       </Tab.Navigator>
       </NavigationContainer> :
