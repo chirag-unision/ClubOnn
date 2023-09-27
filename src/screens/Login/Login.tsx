@@ -1,25 +1,48 @@
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { TextInput, Button } from "@react-native-material/core"
 import React, { useState } from 'react'
-import axios from 'axios';
+import axios from 'axios'
+import {baseURL} from '../../../app.json'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Login() {
+export default function Login(props:any) {
   const [loading, setLoading] = useState(false);
   const [mobileCheck, setMobileCheck]= useState(false);
   const [mobile, setMobile]= useState('');
 
+  const storeData = async (value: string) => {
+    try {
+      await AsyncStorage.setItem('key', value);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('key');
+      if (value !== null) {
+        props.validationCheck();
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
   const handleLogin= ()=> {
-    if(mobile.match('/^[6-8][0-9]{9}$/')) {
-    axios.post('http://localhost:3100/login', {
-      mobile: mobile
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+    let regex= /^[6-9][0-9]{9}$/;
+    if(regex.test(mobile)) {
+      axios.post(baseURL+'login', {
+        mobile: mobile
+      })
+      .then(function (response) {
+        storeData(response.data.token)
+        storeData(mobile)
+        getData();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
 
   return (

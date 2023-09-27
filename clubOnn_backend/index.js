@@ -29,7 +29,7 @@ db.clubs= require('./modals/Clubs')(sequelize, DataTypes);
 app.use(express.json());
 
 app.get('/', (req, res)=>{
-    res.send('Hey there! This is Wanderlust backend.');
+    res.send('Hey there! This is ClubOnn backend.');
 });
 
 app.use('/login', LoginRoute);
