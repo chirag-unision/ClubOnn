@@ -5,7 +5,7 @@ import axios from 'axios'
 import {baseURL} from '../../../app.json'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Login(props:any) {
+export default function Login({navigation}:any) {
   const [loading, setLoading] = useState(false);
   const [mobileCheck, setMobileCheck]= useState(false);
   const [mobile, setMobile]= useState('');
@@ -23,7 +23,8 @@ export default function Login(props:any) {
       const value = await AsyncStorage.getItem('key');
       if (value !== null) {
         console.log(value)
-        props.validationCheck();
+        navigation.replace('Main')
+
       }
     } catch (e) {
       // error reading value

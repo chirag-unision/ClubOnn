@@ -4,12 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ClubProfile from '../ClubProfile/ClubProfile'
 
-const Settings= (props:any, { navigation }:any) => {
+const Settings= ({navigation}:any) => {
 
   const handleLogout= async ()=> {
     try {
       await AsyncStorage.removeItem('key')
-      props.changeLoginState(false)
+      navigation.replace('Login');
     } catch(e) {
       // remove error
     }
@@ -89,7 +89,7 @@ const FollowingPage= () => {
   )
 }
 
-export default function Profile(props) {
+export default function Profile() {
   const Stack = createNativeStackNavigator();
   const main = "Settings";
   const clubpg = "ClubsPage";
@@ -97,7 +97,7 @@ export default function Profile(props) {
   
   return (
     <Stack.Navigator initialRouteName={main} screenOptions={{headerShown: false}}>
-      <Stack.Screen name={main} component={()=> <Settings changeLoginState={props.setIsLogin} />} />
+      <Stack.Screen name={main} component={Settings} />
       <Stack.Screen name={clubpg} component={ClubsPage} />
       <Stack.Screen name={followpg} component={FollowingPage} />
     </Stack.Navigator>
