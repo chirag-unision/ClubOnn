@@ -149,6 +149,7 @@ const styles2 = StyleSheet.create({
       color: '#fff',
       borderRadius: 5,
       fontSize: 20,
+      width: 200,
   },
   card: {
     // flex: 1,
