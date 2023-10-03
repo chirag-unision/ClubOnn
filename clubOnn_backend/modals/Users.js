@@ -9,4 +9,5 @@ module.exports= (sequelize, DataTypes)=> {
         clubsjoined: DataTypes.STRING,
         clubsfollowing: DataTypes.STRING
     });
+    return Users;
 }

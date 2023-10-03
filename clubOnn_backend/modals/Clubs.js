@@ -11,4 +11,5 @@ module.exports= (sequelize, DataTypes)=> {
         clubleads: DataTypes.STRING,
         datahash: DataTypes.STRING
     });
+    return Clubs;
 }

@@ -32,7 +32,12 @@ app.get('/', (req, res)=>{
     res.send('Hey there! This is ClubOnn backend.');
 });
 
-app.use('/login', LoginRoute);
+function middleDB(req, res, next) {
+  req.db = db;
+  next();
+}
+
+app.use('/login', middleDB, LoginRoute);
 app.use('/getclubinfo', ClubInfoRoute);
 app.use('/getclubs', GetClubsRoute);
 app.use('/getfollowings', GetFollowingsRoute);
