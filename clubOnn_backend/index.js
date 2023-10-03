@@ -38,9 +38,9 @@ function middleDB(req, res, next) {
 }
 
 app.use('/login', middleDB, LoginRoute);
-app.use('/getclubinfo', ClubInfoRoute);
-app.use('/getclubs', GetClubsRoute);
-app.use('/getfollowings', GetFollowingsRoute);
+app.use('/getclubinfo', middleDB, ClubInfoRoute);
+app.use('/getclubs', middleDB, GetClubsRoute);
+app.use('/getfollowings', middleDB, GetFollowingsRoute);
 
 app.use((req, res) => {
     res.status(404).send('Not found!');

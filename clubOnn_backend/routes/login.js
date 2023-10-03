@@ -9,9 +9,11 @@ router.post('/', (req, res) => {
   const db= req.db;
   const users= db.users;
 
-  users.findAll()
+  users.findOne({
+    where: { mobile: mobile }
+  })
   .then((user) => {
-    if(user.length==0) {
+    if(user==null) {
       users.create({ mobile: mobile })
       .then((newUser) => {
         console.log('New student created:', newUser.toJSON());
