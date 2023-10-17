@@ -39,7 +39,11 @@ export default function Login({navigation}:any) {
       .then(function (response) {
         storeData(response.data.token)
         storeData(mobile)
-        getData();
+        if(JSON.parse(response.data.interests).length==0) {
+          navigation.replace('Boarding')
+        } else {
+          getData();
+        }
       })
       .catch(function (error) {
         console.log(error);

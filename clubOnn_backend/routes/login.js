@@ -13,13 +13,25 @@ router.post('/', (req, res) => {
     where: { mobile: mobile }
   })
   .then((user) => {
+    const token = jwt.sign({ mobile: mobile }, secretKey, { expiresIn: '672h' });
     if(user==null) {
       users.create({ mobile: mobile })
       .then((newUser) => {
         console.log('New student created:', newUser.toJSON());
+        res.send({
+          token: token, 
+          interests: '[]', 
+          msg: 'Hello, You are calling the login api. Your mobile no. is '+mobile
+        });
       })
       .catch((error) => {
         console.error('Error creating student:', error);
+      });
+    } else {
+      res.send({
+        token: token, 
+        interests: user.dataValues.interests, 
+        msg: 'Hello, You are calling the login api. Your mobile no. is '+mobile
       });
     }
   })
@@ -27,8 +39,6 @@ router.post('/', (req, res) => {
     console.error('Error retrieving students:', error);
   });
 
-  const token = jwt.sign({ mobile: mobile }, secretKey, { expiresIn: '672h' });
-  res.send({token: token, msg: 'Hello, You are calling the login api. Your mobile no. is '+mobile});
 });
 
 module.exports = router;
