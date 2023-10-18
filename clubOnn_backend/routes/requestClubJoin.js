@@ -3,25 +3,26 @@ const router = express.Router();
 
 // Route: POST /
 router.post('/', (req, res) => {
-  const { interests } = req.body;
+  const { userID, clubID } = req.body;
   const db= req.db;
-  const clubs= db.clubs;
+  const requests= db.requests;
 
-  clubs.findAll({
-    where: { id: JSON.parse(interests) }
+  clubs.create({
+    clubid: clubID,
+    userid: userID,
+    status: 'N'
   })
   .then((response)=> {
     res.send({
       data: response.dataValues,
-      msg: 'Hello, You are calling the getClubs api'
+      msg: 'Hello, You are calling the getFollowings api'
     });
   })
   .catch((error) => {
     console.log('Error: ', error);
   })
 
-  // res.send('Hello, You are calling the getClubs api');
-
+  // res.send('Hello, You are calling the getFollowings api');
 });
 
 module.exports = router;

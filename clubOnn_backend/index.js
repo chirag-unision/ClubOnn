@@ -26,6 +26,7 @@ db.sequelize = sequelize;
 db.users= require('./modals/Users')(sequelize, DataTypes);
 db.clubs= require('./modals/Clubs')(sequelize, DataTypes);
 db.category= require('./modals/Categories')(sequelize, DataTypes);
+db.requests= require('./modals/JoinRequests')(sequelize, DataTypes);
 
 app.use(express.json());
 
