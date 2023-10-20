@@ -39,7 +39,7 @@ function App(): JSX.Element {
   
   return (
     <NavigationContainer>
-      {isLogin ? ( isBoarding?<MainStack />:<Boarding />) : <LoginStack />}
+      {isLogin ? ( isBoarding?<MainStack />:<MainStack />) : <LoginStack />}
     </NavigationContainer>
 
   );

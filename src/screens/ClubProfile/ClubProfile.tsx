@@ -1,17 +1,33 @@
 import { StyleSheet, Text, View, Image, Pressable, ScrollView, Dimensions } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import {baseURL} from '../../../app.json';
 
-export default function ClubProfile() {
+export default function ClubProfile({route}:any) {
   const [joinreq, setJoinReq]= useState(false);
   const [follow, setFollow]= useState(false);
+  const [data, setData]= useState([]);
+  const { clubid }= route.params;
+
+  useEffect(()=> {
+    axios.post(baseURL+'getclubinfo', {
+        clubid: clubid
+    })
+    .then((response)=> {
+        console.log(response.data);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+  }, []);
 
   return (
     <ScrollView style={styles.wrapper}>
         <View style={styles.top}>
             <Image source={{ uri: "https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg" }} style={styles.displayImage} />
             <View>
-                <Text style={[styles.text, styles.title]}>Local Dance Society</Text>
-                <Text style={[styles.text]}>Dance</Text>
+                <Text style={[styles.text, styles.title]}>{data.title}</Text>
+                <Text style={[styles.text]}>{data.category}</Text>
             </View>
         </View>
         <View>

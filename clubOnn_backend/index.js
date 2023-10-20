@@ -4,9 +4,9 @@ const port= 3100
 
 //Routers
 const LoginRoute= require('./routes/login')
-const ClubInfoRoute= require('./routes/login')
-const GetClubsRoute= require('./routes/login')
-const GetFollowingsRoute= require('./routes/login')
+const ClubInfoRoute= require('./routes/getClubInfo')
+const GetClubsRoute= require('./routes/getClubs')
+const GetFollowingsRoute= require('./routes/getFollowings')
 
 const {Sequelize, DataTypes} = require('sequelize')
 const sequelize = require('./sequelize');
