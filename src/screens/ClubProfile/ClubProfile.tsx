@@ -7,11 +7,11 @@ export default function ClubProfile({route}:any) {
   const [joinreq, setJoinReq]= useState(false);
   const [follow, setFollow]= useState(false);
   const [data, setData]= useState([]);
-  const { clubid }= route.params;
+//   const { clubid }= route.params;
 
   useEffect(()=> {
     axios.post(baseURL+'getclubinfo', {
-        clubid: clubid
+        // clubid: clubid
     })
     .then((response)=> {
         console.log(response.data);
