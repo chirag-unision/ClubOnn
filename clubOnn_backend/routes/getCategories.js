@@ -6,10 +6,12 @@ router.get('/', (req, res) => {
   const db= req.db;
   const category= db.category;
 
-  category.findAll()
+  category.findAll({
+    attributes: [ 'id', 'catname' ]
+  })
   .then((response)=> {
     res.send({
-      data: response.dataValues,
+      interests: response,
       msg: 'Hello, You are calling the getCategories api'
     });
   })

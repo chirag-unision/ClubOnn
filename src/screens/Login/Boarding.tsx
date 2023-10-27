@@ -7,13 +7,16 @@ import axios from 'axios';
 import {baseURL} from '../../../app.json';
 
 export default function Boarding() {
-  const [interests, setInterests]= useState('');
+  const [uid, setUid]= useState();
+  const [data, setData]= useState();
+  const [interests, setInterests]= useState([]);
 
   useEffect(()=> {
+    getUser();
     createStrogare();
     axios.get(baseURL+'getCategories')
     .then(function (response) {
-      console.log(response)
+      setInterests(response.data.interests)
 
     })
     .catch(function (error) {
@@ -21,17 +24,46 @@ export default function Boarding() {
     });
   },[])
 
+  const getUser= async ()=> {
+    const user= await AsyncStorage.getItem('key');
+    setUid(user);
+    console.log('user: '+user);
+  }
+
+  const getData= async ()=> {
+    const data= await AsyncStorage.getItem('getInterests');
+    setData(data);
+  }
+
   const createStrogare= async ()=> {
     let data= await AsyncStorage.setItem('getInterests', '[]');
+  }
+
+  const handleSubmit= ()=> {
+    getData();
+    console.log(data);
+    axios.post(baseURL+'setcategories', {
+      userID: uid,
+      data: data
+    })
+    .then(function (response) {
+      console.log(response)
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   return (
     <View style={styles.wrapper}>
       <Text style={styles.text}>Boarding</Text>
       <View style={styles.container}>
-        <ChoiceButton refid={1} />
+        {interests.length!=0 && interests.map((item)=> {
+          return <ChoiceButton refid={item.id} title={item.catname} />
+        })}
       </View>
-      <Button variant="contained" title="Submit" />
+      <Button variant="contained" title="Submit" onPress={handleSubmit} />
     </View>
   )
 }

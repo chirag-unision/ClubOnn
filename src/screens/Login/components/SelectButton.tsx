@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   refid: number;
+  title: string;
 }
 
 export default function SelectButton(props: Props) {
@@ -12,10 +13,10 @@ export default function SelectButton(props: Props) {
 
   const pickItem= ()=> {
     if(!isPicked) {
-      setItemToStorage(1);
+      setItemToStorage(props.refid);
       setIsPicked(true);
     } else {
-      removeFromStorage(1);
+      removeFromStorage(props.refid);
       setIsPicked(false);
     }
   }
@@ -25,7 +26,7 @@ export default function SelectButton(props: Props) {
     let json= JSON.parse(data);
     json.push(value);
     console.log(json);
-    // await AsyncStorage.setItem()
+    await AsyncStorage.setItem('getInterests', JSON.stringify(json));
   }
 
   const removeFromStorage=async (value:any) => {
@@ -34,10 +35,11 @@ export default function SelectButton(props: Props) {
     let index= json.indexOf(value);
     json.splice(index, 1);
     console.log(json);
+    await AsyncStorage.setItem('getInterests', JSON.stringify(json));
   }
 
   return (
-    <Button onPress={pickItem} variant={isPicked?"contained":"outlined"} title="Outlined" color="white" style={styles.choiceBtn} />
+    <Button onPress={pickItem} variant={isPicked?"contained":"outlined"} title={props.title} color="white" style={styles.choiceBtn} />
   )
 }
 
