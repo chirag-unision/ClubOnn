@@ -3,12 +3,25 @@ import { Button } from "@react-native-material/core";
 import React, { useEffect, useState } from 'react'
 import ChoiceButton from './components/SelectButton'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import axios from 'axios';
 import {baseURL} from '../../../app.json';
+import MainStack from '../../stacks/MainStack';
 
 export default function Boarding() {
+  const Stack = createNativeStackNavigator();
+  const main = "Main";
+  const boarding = "Boarding";
+  return (
+      <Stack.Navigator initialRouteName={boarding} screenOptions={{ headerShown: false }}>
+          <Stack.Screen name={main} component={MainStack} />
+          <Stack.Screen name={boarding} component={BoardingScreen} />
+      </Stack.Navigator>
+  )
+}
+
+function BoardingScreen({navigation}:any) {
   const [uid, setUid]= useState();
-  const [data, setData]= useState();
   const [interests, setInterests]= useState([]);
 
   useEffect(()=> {
@@ -30,24 +43,19 @@ export default function Boarding() {
     console.log('user: '+user);
   }
 
-  const getData= async ()=> {
-    const data= await AsyncStorage.getItem('getInterests');
-    setData(data);
-  }
-
   const createStrogare= async ()=> {
     let data= await AsyncStorage.setItem('getInterests', '[]');
   }
 
-  const handleSubmit= ()=> {
-    getData();
-    console.log(data);
+  const handleSubmit= async ()=> {
+    const data= await AsyncStorage.getItem('getInterests');
     axios.post(baseURL+'setcategories', {
       userID: uid,
       data: data
     })
     .then(function (response) {
       console.log(response)
+      navigation.replace('Main');
 
     })
     .catch(function (error) {
