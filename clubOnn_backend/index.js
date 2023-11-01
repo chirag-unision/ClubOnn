@@ -9,6 +9,7 @@ const GetClubsRoute= require('./routes/getClubs')
 const GetFollowingsRoute= require('./routes/getFollowings')
 const GetCategories= require('./routes/getCategories')
 const SetCategories= require('./routes/setCategories')
+const GetSuggestions= require('./routes/getSuggestions')
 
 const {Sequelize, DataTypes} = require('sequelize')
 const sequelize = require('./sequelize');
@@ -47,6 +48,7 @@ app.use('/getclubs', middleDB, GetClubsRoute);
 app.use('/getfollowings', middleDB, GetFollowingsRoute);
 app.use('/getcategories', middleDB, GetCategories);
 app.use('/setcategories', middleDB, SetCategories);
+app.use('/getsuggestions', middleDB, GetSuggestions);
 
 app.use((req, res) => {
     res.status(404).send('Not found!');

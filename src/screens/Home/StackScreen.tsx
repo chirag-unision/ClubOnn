@@ -7,11 +7,39 @@ import {
   Dimensions, 
   Image 
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from './components/Card';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {baseURL} from '../../../app.json';
 
 export function MainScreen({ navigation }:any) {
-  const [data, setData]= useState([1,2,3]);
+  const [data, setData]= useState([]);
+
+  useEffect(()=> {
+    getSuggestions();
+  }, []);
+
+  const getSuggestions= async ()=> {
+    const interests= await AsyncStorage.getItem('getInterests');
+    axios.post(baseURL+'getSuggestions', {
+      // userID: uid,
+      interests: interests
+    })
+    .then(function (response) {
+      setData(response.data.data);
+
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  interface DataItems {
+    title: string,
+    description: string,
+    category: number
+  }
   
     return (
       <View style={styles.wrapper}>
@@ -21,22 +49,25 @@ export function MainScreen({ navigation }:any) {
           </View>
           <View style={styles.section}>
             <ScrollView horizontal={true} >
-              {data.map((item)=> {
-                return <Card />
+              {data.map((item: DataItems)=> {
+                if(item.category==1)
+                return <Card title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
           <View style={styles.section}>
             <ScrollView horizontal={true} >
-              {data.map((item)=> {
-                return <Card />
+              {data.map((item: DataItems)=> {
+                if(item.category==2)
+                return <Card title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
           <View style={styles.section}>
             <ScrollView horizontal={true} >
-              {data.map((item)=> {
-                return <Card />
+              {data.map((item: DataItems)=> {
+                if(item.category==3)
+                return <Card title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
