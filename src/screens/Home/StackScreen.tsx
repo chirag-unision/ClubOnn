@@ -51,7 +51,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==1)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card title={item.title} description={item.description} />
               })}
             </ScrollView>
           </View>
@@ -59,7 +59,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==2)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card title={item.title} description={item.description} />
               })}
             </ScrollView>
           </View>
@@ -67,7 +67,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==3)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card title={item.title} description={item.description} />
               })}
             </ScrollView>
           </View>
