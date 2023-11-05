@@ -10,14 +10,14 @@ export default function ClubProfile({route}:any) {
 //   const { clubid }= route.params;
 
   useEffect(()=> {
-    axios.post(baseURL+'getclubinfo', {
-        // clubid: clubid
-    })
-    .then((response)=> {
-        console.log(response.data);
-    })
-    .catch((error)=> {
-        console.log(error);
+    // axios.post(baseURL+'getclubinfo', {
+    //     // clubid: clubid
+    // })
+    // .then((response)=> {
+    //     console.log(response.data);
+    // })
+    // .catch((error)=> {
+    //     console.log(error);
     })
   }, []);
 
