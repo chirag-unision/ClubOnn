@@ -51,7 +51,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==1)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card key={item.id} title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>

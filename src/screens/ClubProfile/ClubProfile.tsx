@@ -8,6 +8,7 @@ export default function ClubProfile({route}:any) {
   const [follow, setFollow]= useState(false);
   const [data, setData]= useState([]);
 //   const { clubid }= route.params;
+  const { title, description }= route.params;
 
   useEffect(()=> {
     // axios.post(baseURL+'getclubinfo', {
@@ -18,15 +19,27 @@ export default function ClubProfile({route}:any) {
     // })
     // .catch((error)=> {
     //     console.log(error);
-    })
+    // })
   }, []);
+
+  const setClubToFollow= ()=> {
+    axios.post(baseURL+'setFollowing', {
+        // clubid: clubid
+    })
+    .then((response)=> {
+        console.log(response.data);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+  }
 
   return (
     <ScrollView style={styles.wrapper}>
         <View style={styles.top}>
             <Image source={{ uri: "https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg" }} style={styles.displayImage} />
             <View>
-                <Text style={[styles.text, styles.title]}>{data.title}</Text>
+                <Text style={[styles.text, styles.title]}>{title}</Text>
                 <Text style={[styles.text]}>{data.category}</Text>
             </View>
         </View>
@@ -35,7 +48,7 @@ export default function ClubProfile({route}:any) {
             <View>
                 <Text style={[styles.text, styles.description]}>Description</Text>
                 <Text style={[styles.text, styles.description]}>
-                A computer program can easily produce gibberish - especially if it has been provided with garbage beforehand. This program does something a little different. It takes a block of text as input and works out the proportion of characters within the text according to a chosen order. For example, an order of 2 means the program looks at pairs of letters, an order of 3 means triplets of letters and so on. The software can regurgitate random text that is controlled by the proportion of characters. The results can be quite surprising.
+                    {description}
                 </Text>
             </View>
         </View>

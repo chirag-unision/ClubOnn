@@ -2,14 +2,15 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React from 'react'
 
 interface Props {
+  id: number,
   title: string,
   description: string,
-  navigation: any
+  navigation: any,
 }
 
 export default function Card(props: Props) {
   return (
-    <Pressable onPress={()=>{props.navigation.navigate('clubprofile', {})}}>
+    <Pressable onPress={()=>{props.navigation.navigate('clubprofile', {title: props.title, description: props.description, clubid: props.id})}}>
     <View style={styles.card}>
         <View style={styles.titlesection}>
         <Image style={styles.profileImg} source={{uri: 'https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg'}} width={80} height={80} />
