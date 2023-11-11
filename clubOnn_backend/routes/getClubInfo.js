@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
   })
   .then((response)=> {
     res.send({
-      data: response.dataValues,
+      data: response,
       msg: 'Hello, You are calling the getClubs api'
     });
   })

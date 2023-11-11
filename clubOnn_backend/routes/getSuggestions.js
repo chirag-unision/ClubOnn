@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
   const clubs= db.clubs;
 //   const users= db.users;
 
-  clubs.findAll({ attributes: ['category', 'title', 'description'] }, {
+  clubs.findAll({ attributes: ['id', 'category', 'title', 'description'] }, {
     where: { category: JSON.parse(interests) }
   })
   .then((response)=> {

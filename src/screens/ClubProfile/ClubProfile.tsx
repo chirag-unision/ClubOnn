@@ -7,31 +7,43 @@ export default function ClubProfile({route}:any) {
   const [joinreq, setJoinReq]= useState(false);
   const [follow, setFollow]= useState(false);
   const [data, setData]= useState([]);
-//   const { clubid }= route.params;
-  const { title, description }= route.params;
+  const { title, description, clubid }= route.params;
 
   useEffect(()=> {
-    // axios.post(baseURL+'getclubinfo', {
-    //     // clubid: clubid
-    // })
-    // .then((response)=> {
-    //     console.log(response.data);
-    // })
-    // .catch((error)=> {
-    //     console.log(error);
-    // })
-  }, []);
-
-  const setClubToFollow= ()=> {
-    axios.post(baseURL+'setFollowing', {
-        // clubid: clubid
+    axios.post(baseURL+'getclubinfo', {
+        clubid: clubid
     })
     .then((response)=> {
-        console.log(response.data);
+        const fetched= response.data;
+        const res= JSON.parse(fetched.data.followerlist).indexOf(3);
+        if(res!==-1) { setFollow(true) }
     })
     .catch((error)=> {
         console.log(error);
     })
+  }, []);
+
+  const setClubToFollow= (state:boolean, action:number)=> {
+    axios.post(baseURL+'setFollowing', {
+        clubid: clubid,
+        uid: 3,
+        action: action
+    })
+    .then((response)=> {
+        console.log(response.data);
+        setFollow(state);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+  }
+
+  const toggleButton= ()=> {
+    if(!follow) {
+      setClubToFollow(true, 1);
+    } else {
+      setClubToFollow(false, 0);
+    }
   }
 
   return (
@@ -56,7 +68,7 @@ export default function ClubProfile({route}:any) {
             <Pressable style={[styles.button, joinreq ? {backgroundColor: 'black'} : {backgroundColor: 'purple'}]} onPress={() => setJoinReq(true)}>
                 <Text style={[styles.text]}>{joinreq ? "Request Sent" : "Send Join Request"}</Text>
             </Pressable>
-            <Pressable style={[styles.button, follow ? {backgroundColor: 'black'} : {backgroundColor: 'purple'}]} onPress={() => setFollow(true)}>
+            <Pressable style={[styles.button, follow ? {backgroundColor: 'black'} : {backgroundColor: 'purple'}]} onPress={toggleButton}>
                 <Text style={[styles.text]}>{follow ? "Following" : "Follow"}</Text>
             </Pressable>
         </View>

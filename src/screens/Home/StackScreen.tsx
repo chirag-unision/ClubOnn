@@ -36,6 +36,7 @@ export function MainScreen({ navigation }:any) {
   }
 
   interface DataItems {
+    id: number,
     title: string,
     description: string,
     category: number
@@ -51,7 +52,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==1)
-                return <Card key={item.id} title={item.title} description={item.description} navigation={navigation} />
+                return <Card clubid={item.id} title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
@@ -59,7 +60,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==2)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card  clubid={item.id} title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
@@ -67,7 +68,7 @@ export function MainScreen({ navigation }:any) {
             <ScrollView horizontal={true} >
               {data.map((item: DataItems)=> {
                 if(item.category==3)
-                return <Card title={item.title} description={item.description} navigation={navigation} />
+                return <Card clubid={item.id} title={item.title} description={item.description} navigation={navigation} />
               })}
             </ScrollView>
           </View>
