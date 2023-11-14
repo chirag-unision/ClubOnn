@@ -25,7 +25,18 @@ router.post('/', (req, res) => {
                 users.findOne({
                     where: { id: uid }
                 })
-                
+                .then((response) => {
+                    clubslist = JSON.parse(response.clubsfollowing);
+                    index = clubslist.indexOf(clubid);
+                    if (action == 1) {
+                        if (index == -1) clubslist.push(clubid);
+                    }
+                    if (action == 0) {
+                        clubslist.splice(index, 1);
+                    }
+                    response.update({ clubsfollowing: JSON.stringify(clubslist) })
+                })
+
             })
             res.send({
                 data: response.followerlist,
