@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Pressable } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ClubProfile from '../ClubProfile/ClubProfile'
+import axios from 'axios'
+import {baseURL} from '../../../app.json';
 
 const Settings= ({navigation}:any) => {
 
@@ -74,16 +76,37 @@ const ClubsPage= ({ navigation }:any) => {
 }
 
 const FollowingPage= () => {
+  const [data, setData]= useState([]);
+
+  useEffect(()=> {
+    getData();
+  }, [])
+
+  const getData= async ()=> {
+    const uid= 3;
+    axios.post(baseURL+'getfollowings', {
+      uid: uid
+    })
+    .then(function (response) {
+      setData(response.data.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   return (
     <View style={styles2.wrapper}>
       <View style={styles2.container}>
-        <View style={styles2.card}>
-            <Image style={styles2.profileImg} source={{uri: 'https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg'}} width={80} height={80} />
-            <View>
-              <Text style={styles2.headtext}>Open Dance Society Faridabad</Text>
-              <Text style={[styles2.text, styles2.badge]}>dsfd</Text>
-            </View>
-        </View>
+        {data && data.map((item)=> {
+          return  <View style={styles2.card}>
+                      <Image style={styles2.profileImg} source={{uri: 'https://img.freepik.com/premium-vector/charity-abstract-logo-healthy-lifestyle_660762-34.jpg'}} width={60} height={60} />
+                      <View>
+                        <Text style={styles2.headtext}>{item.title}</Text>
+                        <Text style={[styles2.text, styles2.badge]}>my category</Text>
+                      </View>
+                  </View>
+        })}
       </View>
     </View>
   )

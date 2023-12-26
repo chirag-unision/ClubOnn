@@ -38,12 +38,35 @@ export default function ClubProfile({route}:any) {
     })
   }
 
+  const sendJoinRequest= (state:boolean, action:number)=> {
+    axios.post(baseURL+'setFollowing', {
+        clubid: clubid,
+        uid: 3,
+        action: action
+    })
+    .then((response)=> {
+        console.log(response.data);
+        setFollow(state);
+    })
+    .catch((error)=> {
+        console.log(error);
+    })
+  }
+
   const toggleButton= ()=> {
     if(!follow) {
       setClubToFollow(true, 1);
     } else {
       setClubToFollow(false, 0);
     }
+  }
+
+  const followToggleButton= ()=> {
+    if(!joinreq) {
+        setJoinReq(true, 1);
+      } else {
+        setJoinReq(false, 0);
+      }
   }
 
   return (
